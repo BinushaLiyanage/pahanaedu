@@ -19,8 +19,8 @@
         <td><%= book.getPrice() %></td>
         <td><%= book.getQuantity() %></td>
 
-        <td>   <a href="BookServlet?action=edit&id=${book.id}">Edit</a> </td>
-        <td>   <a href="BookServlet?action=delete&id=${book.id}" onclick="return confirm('Are you sure?')">Delete</a> </td>
+        <td><a href="BookServlet?action=edit&id=<%= book.getId() %>">Edit</a></td>
+        <td><a href="BookServlet?action=delete&id=<%= book.getId() %>" onclick="return confirm('Are you sure?')">Delete</a></td>
     </tr>
     <% } %>
 
