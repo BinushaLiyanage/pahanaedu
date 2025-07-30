@@ -14,14 +14,14 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            // Load MySQL JDBC driver
+
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Connect to MySQL
+
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/pahanaedu", "root", "root123");
 
-            // Check if user exists
+
             PreparedStatement stmt = conn.prepareStatement(
                     "SELECT * FROM users WHERE username = ? AND password = ?");
 
@@ -31,12 +31,12 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // Login success → show dashboard
+
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
                 response.sendRedirect("dashboard.jsp");
             } else {
-                // Invalid login
+
                 response.getWriter().println("Invalid login. <a href='login.jsp'>Try again</a>");
             }
 

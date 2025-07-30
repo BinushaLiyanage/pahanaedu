@@ -4,21 +4,35 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-    <!-- Welcome file (default page) -->
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- LoginServlet definition -->
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.pahanaedu.LoginServlet</servlet-class>
     </servlet>
+
 
     <!-- Map URL pattern /LoginServlet to the LoginServlet -->
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>BookServlet</servlet-name>
+        <servlet-class>com.pahanaedu.servlet.BookServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BookServlet</servlet-name>
+        <url-pattern>/BookServlet</url-pattern>
+    </servlet-mapping>
+    
+
 
 </web-app>
