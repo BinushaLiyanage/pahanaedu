@@ -21,6 +21,8 @@
     Quantity: <input type="number" name="quantity" value="<%= isEdit ? book.getQuantity() : "" %>" required><br><br>
 
     <input type="submit" value="<%= isEdit ? "Update Book" : "Add Book" %>">
+
+
 </form>
 
 <br>

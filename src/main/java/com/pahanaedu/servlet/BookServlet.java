@@ -15,37 +15,42 @@ public class BookServlet extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        if ("update".equalsIgnoreCase(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            Book book = new Book();
-            book.setId(id);
-            book.setTitle(request.getParameter("title"));
-            book.setAuthor(request.getParameter("author"));
-            book.setPrice(Double.parseDouble(request.getParameter("price")));
-            book.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+        try {
+            HttpSession session = request.getSession();
 
-            try {
+            if ("update".equalsIgnoreCase(action)) {
+
+                int id = Integer.parseInt(request.getParameter("id"));
+                Book book = new Book();
+                book.setId(id);
+                book.setTitle(request.getParameter("title"));
+                book.setAuthor(request.getParameter("author"));
+                book.setPrice(Double.parseDouble(request.getParameter("price")));
+                book.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+
                 bookDAO.updateBook(book);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-        } else {
+                session.setAttribute("message", "Book updated successfully!");
+                session.setAttribute("messageType", "info");
 
-            Book book = new Book();
-            book.setTitle(request.getParameter("title"));
-            book.setAuthor(request.getParameter("author"));
-            book.setPrice(Double.parseDouble(request.getParameter("price")));
-            book.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+            } else {
+                Book book = new Book();
+                book.setTitle(request.getParameter("title"));
+                book.setAuthor(request.getParameter("author"));
+                book.setPrice(Double.parseDouble(request.getParameter("price")));
+                book.setQuantity(Integer.parseInt(request.getParameter("quantity")));
 
-            try {
                 bookDAO.insertBook(book);
-            } catch (Exception e) {
-                e.printStackTrace();
+
+                session.setAttribute("message", "Book added successfully!");
+                session.setAttribute("messageType", "success");
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        response.sendRedirect("BookServlet");  
+        response.sendRedirect("BookServlet");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,34 +58,48 @@ public class BookServlet extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        if ("delete".equalsIgnoreCase(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            try {
+        try {
+            if ("delete".equalsIgnoreCase(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
                 bookDAO.deleteBook(id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            response.sendRedirect("BookServlet");
-        } else if ("edit".equalsIgnoreCase(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            try {
+
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Book deleted successfully!");
+                session.setAttribute("messageType", "error");
+
+                response.sendRedirect("BookServlet");
+
+            } else if ("edit".equalsIgnoreCase(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
                 Book book = bookDAO.selectBook(id);
+
                 request.setAttribute("book", book);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("book-form.jsp");
                 dispatcher.forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
 
-            try {
+            } else {
+
                 List<Book> books = bookDAO.selectAllBooks();
                 request.setAttribute("bookList", books);
+
+
+                HttpSession session = request.getSession();
+                String message = (String) session.getAttribute("message");
+                String messageType = (String) session.getAttribute("messageType");
+
+                if (message != null) {
+                    request.setAttribute("message", message);
+                    request.setAttribute("messageType", messageType);
+                    session.removeAttribute("message");
+                    session.removeAttribute("messageType");
+                }
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
                 dispatcher.forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
