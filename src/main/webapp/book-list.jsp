@@ -7,84 +7,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Book List</title>
+    <meta charset="UTF-8">
+    <title>Book List - PahanaEdu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        .toast-popup {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            font-size: 16px;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            z-index: 9999;
-        }
-
-        .toast-popup.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .toast-popup.hide {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        .toast-success {
-            background-color: #28a745;
+        body { min-height: 100vh; display: flex; }
+        .sidebar {
+            width: 250px;
+            background-color: #0d6efd;
             color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
         }
-
-        .toast-info {
-            background-color: #007bff;
+        .sidebar a {
             color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
         }
-
-        .toast-error {
-            background-color: #dc3545;
-            color: white;
-        }
+        .sidebar a:hover { background-color: #0b5ed7; }
+        .main-content { flex: 1; background-color: #f8f9fa; padding: 20px; }
     </style>
 </head>
 <body>
 
-<h2>All Books</h2>
+<div class="sidebar">
+    <h4 class="text-center">📚 PahanaEdu</h4>
+    <hr class="bg-light">
+    <a href="dashboard.jsp"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a href="BookServlet" class="bg-primary"><i class="bi bi-book"></i> Books</a>
+    <a href="#"><i class="bi bi-people"></i> Customers</a>
+    <a href="#"><i class="bi bi-receipt"></i> Billing</a>
+    <hr class="bg-light">
+    <a href="logout.jsp"><i class="bi bi-box-arrow-right"></i> Logout</a>
+</div>
 
-<% if (message != null) { %>
-<div id="toast" class="toast-popup toast-<%= messageType %>"><%= message %></div>
-<% } %>
+<div class="main-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Book List</h2>
+        <a href="book-form.jsp" class="btn btn-success"><i class="bi bi-plus-lg"></i> Add New Book</a>
+    </div>
 
-<script>
-    window.onload = function () {
-        const toast = document.getElementById("toast");
-        if (toast) {
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.add("hide"), 3500);
-            setTimeout(() => toast.remove(), 4000);
-        }
-    };
-</script>
-
-<table border="1">
-    <tr><th>ID</th><th>Title</th><th>Author</th><th>Price</th><th>Quantity</th><th>Edit</th><th>Delete</th></tr>
-    <% for (Book book : bookList) { %>
-    <tr>
-        <td><%= book.getId() %></td>
-        <td><%= book.getTitle() %></td>
-        <td><%= book.getAuthor() %></td>
-        <td><%= book.getPrice() %></td>
-        <td><%= book.getQuantity() %></td>
-        <td><a href="BookServlet?action=edit&id=<%= book.getId() %>">Edit</a></td>
-        <td><a href="BookServlet?action=delete&id=<%= book.getId() %>" onclick="return confirm('Are you sure?')">Delete</a></td>
-    </tr>
+    <% if (message != null) { %>
+    <div class="alert alert-<%= messageType != null ? messageType : "success" %> alert-dismissible fade show" role="alert">
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <% } %>
-</table>
 
-<br>
-<a href="book-form.jsp"><button>Back to Form</button></a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th><th>Title</th><th>Author</th><th>Price</th><th>Quantity</th><th>Edit</th><th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (bookList != null && !bookList.isEmpty()) {
+                for (Book book : bookList) { %>
+            <tr>
+                <td><%= book.getId() %></td>
+                <td><%= book.getTitle() %></td>
+                <td><%= book.getAuthor() %></td>
+                <td><%= book.getPrice() %></td>
+                <td><%= book.getQuantity() %></td>
+                <td><a href="BookServlet?action=edit&id=<%= book.getId() %>" class="btn btn-warning btn-sm">Edit</a></td>
+                <td><a href="BookServlet?action=delete&id=<%= book.getId() %>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a></td>
+            </tr>
+            <%   }
+            } else { %>
+            <tr><td colspan="7" class="text-center">No books found.</td></tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -11,109 +11,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - PahanaEdu</title>
+    <title>Admin Dashboard - PahanaEdu</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #f3f4f6;
+            min-height: 100vh;
+            display: flex;
         }
-
-        .header {
-            background: #2563eb;
+        .sidebar {
+            width: 250px;
+            background-color: #0d6efd;
             color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #0b5ed7;
+        }
+        .main-content {
+            flex: 1;
+            background-color: #f8f9fa;
             padding: 20px;
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .container {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .card {
-            background: white;
-            display: inline-block;
-            padding: 25px 35px;
-            margin: 20px;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            width: 220px;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-title {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #1f2937;
-        }
-
-        .card a {
-            text-decoration: none;
-            color: #2563eb;
-            font-weight: 500;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #6b7280;
-        }
-
-        .logout-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .logout-button:hover {
-            background: #dc2626;
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    Welcome, <%= username %>
+
+<div class="sidebar">
+    <h4 class="text-center">📚 PahanaEdu</h4>
+    <hr class="bg-light">
+
+    <a href="dashboard.jsp"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a href="BookServlet"><i class="bi bi-book"></i> Books</a>
+    <a href="#"><i class="bi bi-people"></i> Customers</a>
+    <a href="#"><i class="bi bi-receipt"></i> Billing</a>
+    <hr class="bg-light">
+    <a href="logout.jsp"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>
 
-<div class="container">
 
-    <div class="card">
-        <div class="card-title">Manage Books</div>
-        <a href="book-form.jsp">Go to Book Section</a>
-    </div>
-
-    <div class="card">
-        <div class="card-title">View Customers</div>
-        <a href="#">Go to Customers</a>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Billing System</div>
-        <a href="#">Go to Billing</a>
-    </div>
-
-    <br>
-    <a href="logout.jsp" class="logout-button">Logout</a>
+<div class="main-content">
+    <h2>Welcome, <%= username %> 👋</h2>
+    <p>This is your admin dashboard. Use the menu to manage books, customers, and billing.</p>
 </div>
 
-<div class="footer">
-    © 2025 PahanaEdu Bookshop System
-</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
