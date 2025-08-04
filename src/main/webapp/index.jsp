@@ -378,10 +378,6 @@
     <div class="hero-container">
         <h1 class="hero-title">PahanaEdu</h1>
         <p class="hero-subtitle">Advanced Bookshop Management System</p>
-        <p class="hero-description">
-            Streamline your bookshop operations with our comprehensive management solution.
-            Handle customers, inventory, billing, and analytics all in one powerful platform.
-        </p>
 
 
         <div class="features" id="features">
@@ -406,9 +402,7 @@
             <a href="login.jsp" class="btn-custom">
                 <i class="fas fa-rocket me-2"></i>Get Started
             </a>
-            <a href="#about" class="btn-outline-custom" onclick="scrollToAbout()">
-                <i class="fas fa-info-circle me-2"></i>Learn More
-            </a>
+
         </div>
     </div>
 </section>

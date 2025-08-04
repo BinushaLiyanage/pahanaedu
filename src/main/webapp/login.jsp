@@ -353,7 +353,7 @@
             border: 1px solid #bbf7d0;
         }
 
-        /* Responsive Design */
+
         @media (max-width: 768px) {
             .main-container {
                 width: 95vw;
@@ -662,9 +662,9 @@
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Tab') {
-            // Allow normal tab behavior
+
         } else if (e.key === 'Enter' && e.ctrlKey) {
-            // Ctrl+Enter to switch tabs
+
             const currentTab = document.querySelector('.form-tab.active').id;
             switchTab(currentTab === 'loginTab' ? 'register' : 'login');
         }

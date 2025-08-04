@@ -86,4 +86,41 @@ public class BookDAO {
             stmt.executeUpdate();
         }
     }
+
+    public List<Book> selectBooks(String keyword, String sortBy, int start, int total) throws SQLException {
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ? ORDER BY " + sortBy + " LIMIT ?, ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + keyword + "%");
+            stmt.setString(2, "%" + keyword + "%");
+            stmt.setInt(3, start);
+            stmt.setInt(4, total);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Book book = new Book();
+                book.setId(rs.getInt("id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setPrice(rs.getDouble("price"));
+                book.setQuantity(rs.getInt("quantity"));
+                books.add(book);
+            }
+        }
+        return books;
+    }
+
+    public int getBookCount(String keyword) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM books WHERE title LIKE ? OR author LIKE ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + keyword + "%");
+            stmt.setString(2, "%" + keyword + "%");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 }

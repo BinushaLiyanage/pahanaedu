@@ -3,6 +3,10 @@
     List<Book> bookList = (List<Book>) request.getAttribute("bookList");
     String message = (String) request.getAttribute("message");
     String messageType = (String) request.getAttribute("messageType");
+    String keyword = request.getAttribute("keyword") != null ? (String) request.getAttribute("keyword") : "";
+    String sortBy = request.getAttribute("sortBy") != null ? (String) request.getAttribute("sortBy") : "id";
+    int currentPage = request.getAttribute("currentPage") != null ? (Integer) request.getAttribute("currentPage") : 1;
+    int totalPages = request.getAttribute("totalPages") != null ? (Integer) request.getAttribute("totalPages") : 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -57,6 +61,23 @@
     </div>
     <% } %>
 
+    <form class="row g-2 mb-3" method="get" action="BookServlet">
+        <div class="col-md-4">
+            <input type="text" name="keyword" class="form-control" placeholder="Search books..." value="<%= keyword %>">
+        </div>
+        <div class="col-md-3">
+            <select name="sortBy" class="form-select">
+                <option value="id" <%= "id".equals(sortBy) ? "selected" : "" %>>Sort by ID</option>
+                <option value="title" <%= "title".equals(sortBy) ? "selected" : "" %>>Sort by Title</option>
+                <option value="author" <%= "author".equals(sortBy) ? "selected" : "" %>>Sort by Author</option>
+                <option value="price" <%= "price".equals(sortBy) ? "selected" : "" %>>Sort by Price</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Search</button>
+        </div>
+    </form>
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
@@ -83,6 +104,16 @@
             </tbody>
         </table>
     </div>
+
+    <nav>
+        <ul class="pagination">
+            <% for (int i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+                <a class="page-link" href="BookServlet?page=<%= i %>&keyword=<%= keyword %>&sortBy=<%= sortBy %>"><%= i %></a>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
