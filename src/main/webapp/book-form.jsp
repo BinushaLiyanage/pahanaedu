@@ -1,4 +1,4 @@
-<%@ page import="com.pahanaedu.model.Book" %>
+<%@ page import="com.pahanaedu.business.model.Book" %>
 <%
     Book book = (Book) request.getAttribute("book");
     boolean isEdit = book != null;

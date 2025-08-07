@@ -1,6 +1,6 @@
-package com.pahanaedu.dao;
+package com.pahanaedu.business.dao;
 
-import com.pahanaedu.model.Book;
+import com.pahanaedu.business.model.Book;
 import java.sql.*;
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.pahanaedu.model;
+package com.pahanaedu.business.model;
 
 public class Book {
     private int id;

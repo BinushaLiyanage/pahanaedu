@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, com.pahanaedu.model.Book" %>
+<%@ page import="java.util.*, com.pahanaedu.business.model.Book" %>
 <%
     List<Book> bookList = (List<Book>) request.getAttribute("bookList");
     String message = (String) request.getAttribute("message");

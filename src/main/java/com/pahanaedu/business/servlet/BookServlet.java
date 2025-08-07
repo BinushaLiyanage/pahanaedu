@@ -1,7 +1,7 @@
-package com.pahanaedu.servlet;
+package com.pahanaedu.business.servlet;
 
-import com.pahanaedu.dao.BookDAO;
-import com.pahanaedu.model.Book;
+import com.pahanaedu.business.dao.BookDAO;
+import com.pahanaedu.business.model.Book;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.*;

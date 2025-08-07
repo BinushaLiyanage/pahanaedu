@@ -1,4 +1,4 @@
-package com.pahanaedu;
+package com.pahanaedu.business.servlet;
 import jakarta.servlet.*;
 
 import jakarta.servlet.http.*;
