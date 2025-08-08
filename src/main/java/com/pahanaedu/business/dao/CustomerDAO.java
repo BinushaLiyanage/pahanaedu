@@ -81,6 +81,32 @@ public class CustomerDAO {
         }
         return customers;
     }
+    public List<Customer> selectCustomers(String searchQuery, int offset, int limit, String sortBy, String sortOrder) throws SQLException {
+        List<Customer> customers = new ArrayList<>();
+        String baseSQL = "SELECT * FROM customers WHERE name LIKE ? OR email LIKE ?";
+        String orderSQL = " ORDER BY " + sortBy + " " + sortOrder + " LIMIT ?, ?";
+        String fullSQL = baseSQL + orderSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(fullSQL)) {
+            stmt.setString(1, "%" + searchQuery + "%");
+            stmt.setString(2, "%" + searchQuery + "%");
+            stmt.setInt(3, offset);
+            stmt.setInt(4, limit);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setId(rs.getInt("id"));
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setAddress(rs.getString("address"));
+                customer.setAccountNumber(rs.getString("account_number"));
+                customers.add(customer);
+            }
+        }
+        return customers;
+    }
+
 
     public int getCustomerCount(String searchQuery) throws SQLException {
         String sql = "SELECT COUNT(*) FROM customers WHERE name LIKE ? OR email LIKE ?";

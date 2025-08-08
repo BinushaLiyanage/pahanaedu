@@ -1,7 +1,7 @@
 package com.pahanaedu.business.servlet;
 
-import com.pahanaedu.business.dao.CustomerDAO;
 import com.pahanaedu.business.model.Customer;
+import com.pahanaedu.business.service.CustomerService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class CustomerServlet extends HttpServlet {
-    private CustomerDAO customerDAO = new CustomerDAO();
+    private CustomerService customerService = new CustomerService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,7 +27,7 @@ public class CustomerServlet extends HttpServlet {
                 customer.setPhone(request.getParameter("phone"));
                 customer.setAddress(request.getParameter("address"));
 
-                customerDAO.updateCustomer(customer);
+                customerService.updateCustomer(customer);
 
                 session.setAttribute("message", "Customer updated successfully!");
                 session.setAttribute("messageType", "info");
@@ -39,7 +39,7 @@ public class CustomerServlet extends HttpServlet {
                 customer.setPhone(request.getParameter("phone"));
                 customer.setAddress(request.getParameter("address"));
 
-                customerDAO.insertCustomer(customer);
+                customerService.addCustomer(customer);
 
                 session.setAttribute("message", "Customer added successfully!");
                 session.setAttribute("messageType", "success");
@@ -62,7 +62,7 @@ public class CustomerServlet extends HttpServlet {
         try {
             if ("delete".equalsIgnoreCase(action)) {
                 int id = Integer.parseInt(request.getParameter("id"));
-                customerDAO.deleteCustomer(id);
+                customerService.deleteCustomer(id);
 
                 HttpSession session = request.getSession();
                 session.setAttribute("message", "Customer deleted successfully!");
@@ -72,15 +72,31 @@ public class CustomerServlet extends HttpServlet {
 
             } else if ("edit".equalsIgnoreCase(action)) {
                 int id = Integer.parseInt(request.getParameter("id"));
-                Customer customer = customerDAO.selectCustomer(id);
+                Customer customer = customerService.getCustomerById(id);
 
+                String search = request.getParameter("search");
                 request.setAttribute("customer", customer);
+                request.setAttribute("search", search);
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("customer-form.jsp");
                 dispatcher.forward(request, response);
 
             } else {
-                List<Customer> customers = customerDAO.selectAllCustomers();
-                request.setAttribute("customerList", customers);
+
+                String search = request.getParameter("search");
+                String pageParam = request.getParameter("page");
+                int page = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+                int recordsPerPage = 10;
+                int start = (page - 1) * recordsPerPage;
+
+                List<Customer> customerList = customerService.getCustomers(search, start, recordsPerPage);
+                int totalRecords = customerService.getCustomerCount(search);
+                int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+
+                request.setAttribute("customerList", customerList);
+                request.setAttribute("currentPage", page);
+                request.setAttribute("totalPages", totalPages);
+                request.setAttribute("search", search);
 
                 HttpSession session = request.getSession();
                 String message = (String) session.getAttribute("message");
@@ -92,11 +108,6 @@ public class CustomerServlet extends HttpServlet {
                     session.removeAttribute("message");
                     session.removeAttribute("messageType");
                 }
-
-
-                String search = request.getParameter("search");
-                List<Customer> customerList;
-
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("customer-list.jsp");
                 dispatcher.forward(request, response);

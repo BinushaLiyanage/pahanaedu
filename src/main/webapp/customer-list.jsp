@@ -58,6 +58,14 @@
     <% } %>
 
     <div class="table-responsive">
+
+        <form class="d-flex mb-3" method="get" action="CustomerServlet">
+            <input type="text" name="search" class="form-control" placeholder="Search customers" value="${search}">
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
             <tr>
@@ -91,6 +99,24 @@
             </tbody>
 
         </table>
+
+        <%
+            Integer currentPage = (Integer) request.getAttribute("currentPage");
+            Integer totalPages = (Integer) request.getAttribute("totalPages");
+            String searchTerm = (String) request.getAttribute("search");
+            String searchQuery = (searchTerm != null && !searchTerm.isEmpty()) ? "&search=" + searchTerm : "";
+        %>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <% for (int i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+                    <a class="page-link" href="CustomerServlet?page=<%= i %><%= searchQuery %>"><%= i %></a>
+                </li>
+                <% } %>
+            </ul>
+        </nav>
+
     </div>
 </div>
 
