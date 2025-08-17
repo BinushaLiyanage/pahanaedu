@@ -1,13 +1,12 @@
 package com.pahanaedu.business.dao;
 
 import com.pahanaedu.business.model.Customer;
+import com.pahanaedu.persistence.DBUtil;
+
 import java.sql.*;
 import java.util.*;
 
 public class CustomerDAO {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/pahanaedu";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "root123";
 
     private static final String INSERT_CUSTOMER_SQL =
             "INSERT INTO customers (name, email, phone, address,account_number) VALUES (?, ?, ?, ?, ?)";
@@ -19,7 +18,7 @@ public class CustomerDAO {
             "DELETE FROM customers WHERE id = ?";
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+        return DBUtil.getConnection();
     }
 
     public void insertCustomer(Customer customer) throws SQLException {
