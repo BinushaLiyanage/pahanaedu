@@ -1,11 +1,15 @@
 package com.pahanaedu.business.servlet;
+import com.pahanaedu.persistence.DBUtil;
+import com.pahanaedu.util.LoggerUtil;
 import jakarta.servlet.*;
 
 import jakarta.servlet.http.*;
 import java.io.*;
 import java.sql.*;
+import java.util.logging.Logger;
 
 public class LoginServlet extends HttpServlet {
+    private static final Logger logger = LoggerUtil.getLogger();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -14,14 +18,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/pahanaedu", "root", "root123");
-
-
+            Connection conn = DBUtil.getConnection();
             PreparedStatement stmt = conn.prepareStatement(
                     "SELECT * FROM users WHERE username = ? AND password = ?");
 
@@ -43,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             conn.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.severe("Database error: " + e.getMessage());
             response.getWriter().println("Database error.");
         }
     }

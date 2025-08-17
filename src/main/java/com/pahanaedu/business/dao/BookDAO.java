@@ -1,22 +1,20 @@
 package com.pahanaedu.business.dao;
 
 import com.pahanaedu.business.model.Book;
+import com.pahanaedu.persistence.DBUtil;
+
 import java.sql.*;
 import java.util.*;
 
 public class BookDAO {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/pahanaedu";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "root123";
-
-    private static final String INSERT_BOOK_SQL = "INSERT INTO books (title, author, price, quantity) VALUES (?, ?, ?, ?)";
+        private static final String INSERT_BOOK_SQL = "INSERT INTO books (title, author, price, quantity) VALUES (?, ?, ?, ?)";
     private static final String SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id = ?";
     private static final String SELECT_ALL_BOOKS = "SELECT * FROM books";
     private static final String DELETE_BOOK_SQL = "DELETE FROM books WHERE id = ?";
     private static final String UPDATE_BOOK_SQL = "UPDATE books SET title = ?, author = ?, price = ?, quantity = ? WHERE id = ?";
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+        return DBUtil.getConnection();
     }
 
     public void insertBook(Book book) throws SQLException {

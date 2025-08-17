@@ -18,7 +18,7 @@
 
 
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
+            <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
 
@@ -42,6 +42,18 @@
     <servlet-mapping>
         <servlet-name>CustomerServlet</servlet-name>
         <url-pattern>/CustomerServlet</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>BillServlet</servlet-name>
+        <servlet-class>com.pahanaedu.business.servlet.BillServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BillServlet</servlet-name>
+        <url-pattern>/BillServlet</url-pattern>
     </servlet-mapping>
 
 

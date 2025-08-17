@@ -60,7 +60,11 @@
     <div class="table-responsive">
 
         <form class="d-flex mb-3" method="get" action="CustomerServlet">
-            <input type="text" name="search" class="form-control" placeholder="Search customers" value="${search}">
+            <%
+                String search = (String) request.getAttribute("search");
+            %>
+            <input type="text" name="search" class="form-control me-2" placeholder="Search..." value="<%= (search != null) ? search : "" %>">
+
 
             <button type="submit" class="btn btn-primary">Search</button>
         </form>

@@ -37,8 +37,8 @@
     <hr class="bg-light">
     <a href="dashboard.jsp"><i class="bi bi-speedometer2"></i> Dashboard</a>
     <a href="BookServlet" class="bg-primary"><i class="bi bi-book"></i> Books</a>
-    <a href="#"><i class="bi bi-people"></i> Customers</a>
-    <a href="#"><i class="bi bi-receipt"></i> Billing</a>
+    <a href="CustomerServlet"><i class="bi bi-people"></i> Customers</a>
+    <a href="BillServlet"><i class="bi bi-receipt"></i> Billing</a>
     <hr class="bg-light">
     <a href="logout.jsp"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>

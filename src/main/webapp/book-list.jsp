@@ -16,23 +16,67 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body { min-height: 100vh; display: flex; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            background-color: #e3f2fd;
+        }
+
         .sidebar {
             width: 250px;
-            background-color: #0d6efd;
+            background-color: #1565c0;
             color: white;
             display: flex;
             flex-direction: column;
             padding-top: 20px;
         }
+
         .sidebar a {
             color: white;
             text-decoration: none;
             padding: 12px 20px;
             display: block;
         }
-        .sidebar a:hover { background-color: #0b5ed7; }
-        .main-content { flex: 1; background-color: #f8f9fa; padding: 20px; }
+
+        .sidebar a:hover {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        .sidebar a.bg-primary {
+            background-color: #1976d2 !important;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+        }
+
+        .table thead th {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #1565c0;
+            border-color: #1565c0;
+        }
+
+        .btn-primary:hover {
+            background-color: #1976d2;
+            border-color: #1976d2;
+        }
+
+        .page-link {
+            color: #1565c0;
+        }
+
+        .page-item.active .page-link {
+            background-color: #1565c0;
+            border-color: #1565c0;
+        }
     </style>
 </head>
 <body>
@@ -42,8 +86,8 @@
     <hr class="bg-light">
     <a href="dashboard.jsp"><i class="bi bi-speedometer2"></i> Dashboard</a>
     <a href="BookServlet" class="bg-primary"><i class="bi bi-book"></i> Books</a>
-    <a href="#"><i class="bi bi-people"></i> Customers</a>
-    <a href="#"><i class="bi bi-receipt"></i> Billing</a>
+    <a href="CustomerServlet"><i class="bi bi-people"></i> Customers</a>
+    <a href="BillServlet"><i class="bi bi-receipt"></i> Billing</a>
     <hr class="bg-light">
     <a href="logout.jsp"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>

@@ -89,8 +89,8 @@ public class CustomerServlet extends HttpServlet {
                 int recordsPerPage = 10;
                 int start = (page - 1) * recordsPerPage;
 
-                List<Customer> customerList = customerService.getCustomers(search, start, recordsPerPage);
-                int totalRecords = customerService.getCustomerCount(search);
+                List<Customer> customerList = customerService.getAllCustomers();
+                int totalRecords = customerList != null ? customerList.size() : 0;
                 int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
 
                 request.setAttribute("customerList", customerList);
