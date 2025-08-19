@@ -56,7 +56,15 @@
         <url-pattern>/BillServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.pahanaedu.business.servlet.UserServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

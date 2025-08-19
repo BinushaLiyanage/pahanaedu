@@ -429,10 +429,11 @@
 
     <div class="form-container">
 
-        <div class="message error" id="loginError" style="display: none;">
+        <div class="message error" id="loginError" style="display: <%= request.getAttribute("loginError") != null ? "block" : "none" %>;">
             <i class="fas fa-exclamation-circle me-2"></i>
-            Invalid username or password!
+            <%= request.getAttribute("loginError") != null ? request.getAttribute("loginError") : "" %>
         </div>
+
 
 
         <form action="LoginServlet" method="post" id="loginForm">
