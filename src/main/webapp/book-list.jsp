@@ -1,5 +1,13 @@
-<%@ page import="java.util.*, com.pahanaedu.business.model.Book" %>
+<%@ page import="java.util.*, com.pahanaedu.business.model.Book, com.pahanaedu.business.model.User" %>
 <%
+    User loggedInUser = (User) session.getAttribute("user");
+    if (loggedInUser == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    boolean isAdmin = "ADMIN".equalsIgnoreCase(loggedInUser.getRole());
+
     List<Book> bookList = (List<Book>) request.getAttribute("bookList");
     String message = (String) request.getAttribute("message");
     String messageType = (String) request.getAttribute("messageType");
@@ -88,6 +96,9 @@
     <a href="BookServlet" class="bg-primary"><i class="bi bi-book"></i> Books</a>
     <a href="CustomerServlet"><i class="bi bi-people"></i> Customers</a>
     <a href="BillServlet"><i class="bi bi-receipt"></i> Billing</a>
+    <% if (isAdmin) { %>
+    <a href="UserServlet?action=list"><i class="bi bi-people-fill"></i> Users</a>
+    <% } %>
     <hr class="bg-light">
     <a href="logout.jsp"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>
@@ -95,7 +106,13 @@
 <div class="main-content">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Book List</h2>
+        <% if (isAdmin) { %>
         <a href="book-form.jsp" class="btn btn-success"><i class="bi bi-plus-lg"></i> Add New Book</a>
+        <% } else { %>
+        <div class="text-muted">
+            <i class="bi bi-info-circle"></i> View Only Mode
+        </div>
+        <% } %>
     </div>
 
     <% if (message != null) { %>
@@ -126,7 +143,15 @@
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
             <tr>
-                <th>ID</th><th>Title</th><th>Author</th><th>Price</th><th>Quantity</th><th>Edit</th><th>Delete</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <% if (isAdmin) { %>
+                <th>Edit</th>
+                <th>Delete</th>
+                <% } %>
             </tr>
             </thead>
             <tbody>
@@ -138,16 +163,45 @@
                 <td><%= book.getAuthor() %></td>
                 <td><%= book.getPrice() %></td>
                 <td><%= book.getQuantity() %></td>
-                <td><a href="BookServlet?action=edit&id=<%= book.getId() %>" class="btn btn-warning btn-sm">Edit</a></td>
-                <td><a href="BookServlet?action=delete&id=<%= book.getId() %>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a></td>
+                <% if (isAdmin) { %>
+                <td>
+                    <a href="BookServlet?action=edit&id=<%= book.getId() %>" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                </td>
+                <td>
+                    <%
+                        boolean isUsedInBills = false; // You'd get this from your DAO
+                        if (isUsedInBills) { %>
+                    <button class="btn btn-secondary btn-sm" disabled title="Book is used in bills">
+                        <i class="bi bi-trash"></i> Cannot Delete
+                    </button>
+                    <% } else { %>
+                    <a href="BookServlet?action=delete&id=<%= book.getId() %>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this book?')">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+                    <% } %>
+                </td>
+                <% } %>
             </tr>
             <%   }
             } else { %>
-            <tr><td colspan="7" class="text-center">No books found.</td></tr>
+            <tr>
+                <td colspan="<%= isAdmin ? "7" : "5" %>" class="text-center">No books found.</td>
+            </tr>
             <% } %>
             </tbody>
         </table>
     </div>
+
+    <% if (!isAdmin) { %>
+    <div class="alert alert-info mt-3" role="alert">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Note:</strong> You are viewing books in read-only mode. Contact an administrator to make changes.
+    </div>
+    <% } %>
 
     <nav>
         <ul class="pagination">

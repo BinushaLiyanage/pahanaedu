@@ -121,4 +121,15 @@ public class BookDAO {
         }
         return 0;
     }
+
+    public void updateBookQuantity(int bookId, int newQuantity) throws SQLException {
+        String sql = "UPDATE books SET quantity = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, newQuantity);
+            stmt.setInt(2, bookId);
+            stmt.executeUpdate();
+        }
+    }
+
 }
