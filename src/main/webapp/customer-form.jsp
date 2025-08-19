@@ -55,7 +55,7 @@
 
         <div class="mb-3">
             <label class="form-label">Address</label>
-            <input type="text" name="address" class="form-control" value="<%= isEdit ? customer.getPhone() : "" %>" required>
+            <input type="text" name="address" class="form-control" value="<%= isEdit ? customer.getAddress() : "" %>" required>
         </div>
 
 

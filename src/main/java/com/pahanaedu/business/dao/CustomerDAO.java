@@ -129,6 +129,7 @@ public class CustomerDAO {
             stmt.setString(3, customer.getPhone());
             stmt.setString(4, customer.getAddress());
             stmt.setString(5, customer.getAccountNumber());
+            stmt.setInt(6, customer.getId());
             stmt.executeUpdate();
         }
     }

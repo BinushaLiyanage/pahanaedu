@@ -47,7 +47,7 @@ public class CustomerServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("message", "Something went wrong!");
+            session.setAttribute("message", "Customer Already exists!");
             session.setAttribute("messageType", "error");
         }
 
