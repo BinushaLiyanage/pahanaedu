@@ -17,7 +17,7 @@ public class BookDAO {
         return DBUtil.getConnection();
     }
 
-    public void insertBook(Book book) throws SQLException {
+    public boolean insertBook(Book book) throws SQLException {
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(INSERT_BOOK_SQL)) {
             stmt.setString(1, book.getTitle());
@@ -25,6 +25,7 @@ public class BookDAO {
             stmt.setDouble(3, book.getPrice());
             stmt.setInt(4, book.getQuantity());
             stmt.executeUpdate();
+            return true;
         }
     }
 

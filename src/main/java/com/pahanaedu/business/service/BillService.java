@@ -21,6 +21,5 @@ public class BillService {
         bill.setRatePerUnit(RATE_PER_UNIT);
         bill.setTotalAmount(total);
 
-        //billDAO.addBill(bill);
     }
 }

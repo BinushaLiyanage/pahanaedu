@@ -21,7 +21,7 @@ public class CustomerDAO {
         return DBUtil.getConnection();
     }
 
-    public void insertCustomer(Customer customer) throws SQLException {
+    public boolean insertCustomer(Customer customer) throws SQLException {
 
         String accountNumber = "CUST-" + System.currentTimeMillis();
         customer.setAccountNumber(accountNumber);
@@ -34,6 +34,7 @@ public class CustomerDAO {
             stmt.setString(4, customer.getAddress());
             stmt.setString(5, customer.getAccountNumber());
             stmt.executeUpdate();
+            return true;
         }
     }
 
