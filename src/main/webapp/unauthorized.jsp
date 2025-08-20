@@ -8,7 +8,7 @@
 <div class="container mt-5 text-center">
     <div class="alert alert-danger">
         <h3>You are not authorized to access this page.</h3>
-        <a href="index.jsp" class="btn btn-primary mt-3">Back to Dashboard</a>
+        <a href="dashboard.jsp" class="btn btn-primary mt-3">Back to Dashboard</a>
     </div>
 </div>
 </body>

@@ -70,7 +70,24 @@ public class BillServlet extends HttpServlet {
 
                 request.setAttribute("bill", bill);
                 request.getRequestDispatcher("bill-view.jsp").forward(request, response);
+            } else if (action.equals("delete")) {
+            int billId = Integer.parseInt(request.getParameter("id"));
+            Bill bill = billDAO.getBillById(billId);
+
+            if (bill != null) {
+                boolean deleted = billDAO.deleteBill(billId);
+
+                if (deleted) {
+                    request.getSession().setAttribute("successMessage", "Bill deleted successfully!");
+                } else {
+                    request.getSession().setAttribute("errorMessage", "Failed to delete bill!");
+                }
+            } else {
+                request.getSession().setAttribute("errorMessage", "Bill not found!");
             }
+
+                request.getRequestDispatcher("bill-history.jsp").forward(request, response);
+        }
 
         } catch (Exception e) {
             throw new ServletException(e);

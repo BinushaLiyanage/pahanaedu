@@ -132,7 +132,7 @@
             </div>
         </div>
 
-
+        <!-- Total & Submit -->
         <div class="d-flex justify-content-between align-items-center mb-4 total-panel">
             <label>Total:</label>
             <input type="text" class="form-control w-auto d-inline-block" id="total" name="total" readonly>

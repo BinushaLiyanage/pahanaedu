@@ -67,10 +67,48 @@ public class BookDAO {
     }
 
     public void deleteBook(int id) throws SQLException {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(DELETE_BOOK_SQL)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            String deleteBillItemsSQL = "DELETE FROM bill_items WHERE book_id = ?";
+            try (PreparedStatement stmt1 = conn.prepareStatement(deleteBillItemsSQL)) {
+                stmt1.setInt(1, id);
+                int billItemsDeleted = stmt1.executeUpdate();
+                System.out.println("Deleted " + billItemsDeleted + " bill items for book ID: " + id);
+            }
+
+            try (PreparedStatement stmt2 = conn.prepareStatement(DELETE_BOOK_SQL)) {
+                stmt2.setInt(1, id);
+                int booksDeleted = stmt2.executeUpdate();
+                if (booksDeleted == 0) {
+                    throw new SQLException("Book with ID " + id + " not found");
+                }
+                System.out.println("Deleted book with ID: " + id);
+            }
+
+            conn.commit();
+
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    System.err.println("Transaction rolled back due to error: " + e.getMessage());
+                } catch (SQLException rollbackEx) {
+                    System.err.println("Error during rollback: " + rollbackEx.getMessage());
+                }
+            }
+            throw e;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException closeEx) {
+                    System.err.println("Error closing connection: " + closeEx.getMessage());
+                }
+            }
         }
     }
 

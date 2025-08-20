@@ -22,6 +22,11 @@ public class BillDAO {
     private static final String SELECT_BILL_ITEMS = "SELECT bi.id, bi.book_id, bi.quantity, bi.unit_price, bk.title " +
             "FROM bill_items bi JOIN books bk ON bi.book_id = bk.id WHERE bi.bill_id = ?";
 
+    private static final String DELETE_BILL_ITEMS_SQL = "DELETE FROM bill_items WHERE bill_id = ?";
+
+    private static final String DELETE_BILL_SQL = "DELETE FROM bills WHERE id = ?";
+
+
     public int insertBill(Bill bill) throws Exception {
         try (Connection connection = DBUtil.getConnection()) {
             connection.setAutoCommit(false);
@@ -127,5 +132,32 @@ public class BillDAO {
         return bill;
     }
 
+    public boolean deleteBill(int billId) {
+        try (Connection connection = DBUtil.getConnection()) {
+            connection.setAutoCommit(false);
 
+            try {
+
+                try (PreparedStatement deleteItemsStmt = connection.prepareStatement(DELETE_BILL_ITEMS_SQL)) {
+                    deleteItemsStmt.setInt(1, billId);
+                    deleteItemsStmt.executeUpdate();
+                }
+
+
+                try (PreparedStatement deleteBillStmt = connection.prepareStatement(DELETE_BILL_SQL)) {
+                    deleteBillStmt.setInt(1, billId);
+                    int rowsAffected = deleteBillStmt.executeUpdate();
+
+                    connection.commit();
+                    return rowsAffected > 0;
+                }
+            } catch (Exception ex) {
+                connection.rollback();
+                throw ex;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -66,6 +66,36 @@
 <!-- Main Content -->
 <div class="main-content">
   <h2>Bill History</h2>
+  <%
+    String successMessage = (String) session.getAttribute("successMessage");
+    String errorMessage = (String) session.getAttribute("errorMessage");
+
+    if (successMessage != null) {
+      session.removeAttribute("successMessage");
+    }
+    if (errorMessage != null) {
+      session.removeAttribute("errorMessage");
+    }
+  %>
+
+  <% if (successMessage != null) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= successMessage %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
+
+  <% if (errorMessage != null) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= errorMessage %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
+
   <table class="table table-striped table-hover mt-3">
     <thead class="table-dark">
     <tr>
@@ -88,6 +118,11 @@
       <td><%= bill.getBillDate() %></td>
       <td>
         <a href="BillServlet?action=view&id=<%= bill.getId() %>" class="btn btn-sm btn-primary">View</a>
+        <a href="BillServlet?action=delete&id=<%= bill.getId() %>"
+           class="btn btn-danger btn-sm"
+           onclick="return confirm('Are you sure you want to delete this bill?');">
+          Delete
+        </a>
       </td>
     </tr>
     <%

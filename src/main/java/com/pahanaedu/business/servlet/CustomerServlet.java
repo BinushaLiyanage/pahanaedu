@@ -88,8 +88,13 @@ public class CustomerServlet extends HttpServlet {
                 int page = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
                 int recordsPerPage = 10;
                 int start = (page - 1) * recordsPerPage;
+                List<Customer> customerList = null;
+                if(search != null) {
+                    customerList = customerService.getCustomers(search, start, recordsPerPage);
 
-                List<Customer> customerList = customerService.getAllCustomers();
+                }else{
+                 customerList = customerService.getAllCustomers();
+                }
                 int totalRecords = customerList != null ? customerList.size() : 0;
                 int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
 
