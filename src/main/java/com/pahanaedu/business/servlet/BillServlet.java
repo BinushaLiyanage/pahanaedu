@@ -118,20 +118,20 @@ public class BillServlet extends HttpServlet {
             }
 
             if (stockError) {
-                // Show error message and prevent saving
+
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("bill-form.jsp").forward(request, response);
                 return;
             }
 
-            // Reduce stock
+
             for (BillItem item : items) {
                 Book book = bookDAO.selectBook(item.getBookId());
                 book.setQuantity(book.getQuantity() - item.getQuantity());
                 bookDAO.updateBookQuantity(book.getId(), book.getQuantity());
             }
 
-            // Save bill
+
             Bill bill = new Bill();
             bill.setCustomerId(customerId);
             bill.setTotalAmount(total);
@@ -141,7 +141,7 @@ public class BillServlet extends HttpServlet {
             int billId = billDAO.insertBill(bill);
             bill.setId(billId);
 
-            // Set customer info
+
             CustomerDAO customerDAO = new CustomerDAO();
             bill.setCustomerName(customerDAO.selectCustomer(customerId).getName());
             bill.setCustomerAccountNumber(customerDAO.selectCustomer(customerId).getAccountNumber());

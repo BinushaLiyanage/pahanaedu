@@ -49,18 +49,18 @@
     </style>
 </head>
 <body>
-<!-- Sidebar -->
+
 <div class="sidebar">
     <h4 class="text-center text-white">PahanaEdu</h4>
     <a href="dashboard.jsp">Dashboard</a>
     <a href="BookServlet?action=list">Books</a>
     <a href="CustomerServlet?action=list">Customers</a>
-    <a href="BillServlet?action=list">Billing</a>
+    <a href="BillServlet">Billing</a>
     <a href="UserServlet?action=list" class="bg-dark">Users</a>
     <a href="logout.jsp">Logout</a>
 </div>
 
-<!-- Content -->
+
 <div class="content">
     <div class="container">
         <h2>User Management</h2>

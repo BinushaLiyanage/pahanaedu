@@ -237,6 +237,11 @@
             <i class="bi bi-clock-history"></i>
             Bill History
         </a>
+
+        <a class="nav-link" href="help.jsp" title="Help">
+            <i class="bi bi-question-circle"></i> Help
+        </a>
+
     </div>
     <div style="margin-top: auto; padding: 20px 0;">
         <a href="logout.jsp">
@@ -305,10 +310,8 @@
                 <i class="bi bi-person-plus"></i>
                 Add Customer
             </a>
-            <a href="BillServlet?action=reports" class="action-btn">
-                <i class="bi bi-bar-chart"></i>
-                View Reports
-            </a>
+
+
         </div>
     </div>
 </div>

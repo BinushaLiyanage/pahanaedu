@@ -102,7 +102,7 @@ public class BillDAO {
                 bill.setCustomerName(rs.getString("customer_name"));
                 bill.setCustomerAccountNumber(rs.getString("account_number"));
 
-                // fetch bill items
+
                 List<BillItem> items = new ArrayList<>();
                 try (PreparedStatement psItems = connection.prepareStatement(SELECT_BILL_ITEMS)) {
                     psItems.setInt(1, billId);

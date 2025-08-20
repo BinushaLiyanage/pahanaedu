@@ -410,7 +410,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#Help Section" onclick="scrollToAbout()">
+                    <a class="nav-link" href="help.jsp" onclick="scrollToAbout()">
                         <i class="fas fa-info-circle me-1"></i>Help Section
                     </a>
                 </li>
